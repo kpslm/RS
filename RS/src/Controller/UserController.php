@@ -14,4 +14,28 @@ class UserController extends AbstractController
     {
         return $this->render('user/register.html.twig', []);
     }
+
+      /**
+     * @Route("/profil", name="profil")
+     */
+    public function profil()
+    {
+        return $this->render('user/profil.html.twig', []);
+    }
+
+       /**
+     * @Route("/galery", name="galery")
+     */
+    public function galery()
+    {
+        return $this->render('user/galery.html.twig', []);
+    }
+
+      /**
+     * @Route("/picture", name="picture")
+     */
+    public function picture()
+    {
+        return $this->render('user/picture.html.twig', []);
+    }
 }
