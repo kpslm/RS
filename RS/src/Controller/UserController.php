@@ -38,4 +38,12 @@ class UserController extends AbstractController
     {
         return $this->render('user/picture.html.twig', []);
     }
+
+      /**
+     * @Route("/searchFriends", name="searchFriends")
+     */
+    public function searchFriends()
+    {
+        return $this->render('user/searchFriends.html.twig', []);
+    }
 }
