@@ -46,4 +46,12 @@ class UserController extends AbstractController
     {
         return $this->render('user/searchFriends.html.twig', []);
     }
+
+     /**
+     * @Route("/message", name="message")
+     */
+    public function message()
+    {
+        return $this->render('user/message.html.twig', []);
+    }
 }
