@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block link %} <link rel="stylesheet" href="{{ asset('/css/profil.css')}}">{% endblock %}
+{% block link %} <link rel="stylesheet" href="{{ asset('/css/profil.css')}}">
+<script src="js/commentP.js" async></script>{% endblock %}
+
    
 {% block body %}
-<div>
- <img style="max-height: 200px; min-width: 20%" src="{{ asset('/img/yg.JPG') }}">
- <style text-align
+<div id="app">
+<div style="text-align: center;">
+ <img style="max-height: 93vh; min-width: 50%" src="{{ asset('/img/yg.JPG') }}">
+ <button v-on:click="commentP()">sdfrg</button>
  </div>
+ <div v-if="page == 1" >
+ fgdfgh
+ </div>
+</div>
 {% endblock %}
