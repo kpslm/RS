@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block title %} Login {% endblock %}
+
+{% block body %}
+<div style="height: 92vh;">
+
+    <h1 class="title is-2" style="text-align: center; margin: 2% 0 4% 0;">Connexion</h1>
+    <div class="box column is-narrow"
+        style="background-color: white; border: 1px solid rgb(226, 226, 226); height: 50%; width: 30%; margin: 0 auto;">
+        <br>
+        <br>
+        <div class="field" style="margin-bottom: 15px;">
+            <div class="control has-icons-left has-icons-right">
+                <input class="input is-warning" type="text" placeholder="Email">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control has-icons-left has-icons-right">
+                <input class="input is-warning" type="password" placeholder="Mot de passe">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </div>
+        </div>
+
+        <label class="checkbox">
+            <input type="checkbox">
+            Se rappeller de moi
+          </label>
+
+        <div class="field is-grouped" style="margin: 10% 0 0 5%;">
+            <p class="control" style="margin: 0 40% 0 0;">
+                <a class="button is-primary">
+                    Inscription
+                </a>
+            </p>
+            <p class="control">
+                <a class="button is-warning">
+                    Connexion
+                </a>
+            </p>
+        </div>
+
+    </div>
+    {% endblock %}
