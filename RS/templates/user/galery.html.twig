@@ -1,40 +1,51 @@
 {% extends 'base.html.twig' %}
 {% block link %} <link rel="stylesheet" href="{{ asset('/css/profil.css')}}">{% endblock %}
 
-{% block body %} <div class="columns">
-  <div class="column is-two-thirds">
-     <figure class="image is-128x128">
-          <img style="height: 140px; min-width: 20%" src="{{ asset('/img/alt.jpg') }}">
-</figure>
-  </div>
-  <div class="column is-two-thirds">
-  <figure class="image is-128x128">
-          <img style="height: 140px; min-width: 20%" src="{{ asset('/img/ghj.jpg') }}">
-</figure>
-  </div>
-  <div class="column is-two-thirds">
+{% block body %} <div class="columns is-gapless is-multiline is-mobile">
+  <div class="column is-one-quarter" >
     <figure class="image is-128x128">
-          <img style="height: 140px; min-width: 20%" src="{{ asset('/img/jhk.jpg') }}">
-</figure>
+    <img style="height: 140px; min-width: 20%" src="{{ asset('/img/alt.jpg') }}">
+  </figure>
   </div>
-  <div class="column is-two-thirds">
+  <div class="column is-one-quarter"  >
     <figure class="image is-128x128">
-          <img style="height: 140px; min-width: 20%" src="{{ asset('/img/okn.jpg') }}">
-</figure>
+    <img style="height: 140px; min-width: 20%" src="{{ asset('/img/ghj.jpg') }}">
+  </figure>
   </div>
-
-  <div class="column is-two-thirds">
+  <div class="column is-one-quarter" >
     <figure class="image is-128x128">
-          <img style="height: 140px; min-width: 20%" position:" absolute" src="{{ asset('/img/okn.jpg') }}">
-</figure>
+    <img style="height: 140px; min-width: 20%" src="{{ asset('/img/jhk.jpg') }}">
+  </figure>
   </div>
-
-  <div class="column is-two-thirds">
+  <div class="column is-one-quarter" >
     <figure class="image is-128x128">
-          <img style="height: 140px; min-width: 20%" position:" absolute left: 49%; top: 34%"; src="{{ asset('/img/okn.jpg') }}">
-</figure>
+    <img style="height: 140px; min-width: 20%" src="{{ asset('/img/okn.jpg') }}">
+  </figure>
   </div>
-      
-
-  
-</div>{% endblock %}
+  <div class="column is-one-quarter"  >
+    <figure class="image is-128x128">
+    <img style="height: 140px; min-width: 20%" src="{{ asset('/img/okn.jpg')}}">
+  </figure>
+  </div>
+  <div class="column is-one-quarter"  >
+    <figure class="image is-128x128">
+    <img style="height: 140px; min-width: 20%" ; src="{{ asset('/img/okn.jpg') }}">
+  </figure>
+  </div>
+  <div class="column is-one-quarter"  >
+    <figure class="image is-128x128">
+    <img style="height: 140px; min-width: 20%"  src="{{ asset('/img/VB1.jpg') }}">
+  </figure>
+  </div>
+  <div class="column is-one-quarter" >
+    <figure class="image is-128x128">
+    <img style="height: 140px; min-width: 20%" src="{{ asset('/img/VB2.jpg') }}">
+  </figure>
+  </div>
+  <div class="column is-on-quarter" >
+    <figure class="image is-128x128">
+    <img style="height: 140px; min-width: 20%" src="{{ asset('/img/VB2.jpg') }}">
+  </figure>
+  </div>
+</div>
+{% endblock %}
