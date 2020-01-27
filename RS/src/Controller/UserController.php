@@ -62,4 +62,13 @@ class UserController extends AbstractController
     {
         return $this->render('user/message.html.twig', []);
     }
+
+      /**
+     * @Route("/notification", name="notification")
+     */
+    public function notification()
+    {
+        return $this->render('user/notification.html.twig', []);
+    }
+
 }
