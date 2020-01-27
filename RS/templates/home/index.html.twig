@@ -7,8 +7,8 @@
 <div class="container">
   <div style="margin-top: 10px; " class="columns is-mobile is-centered">
     <div id="app" class="column is-half" style="border: 1px solid rgb(226, 226, 226); margin-right: 10%; background-color: white; height: 220px;">
-      <button class="js-left" v-on:click="caroussel()"><</button>
-      <button class="js-right" v-on:click="caroussel()">></button>
+      <img v-on:click="caroussel()" src="{{ asset('/img/back.png') }}" alt="" height="20px" width="20px" style="cursor: pointer;">
+      <img v-on:click="caroussel()" src="{{ asset('/img/next.png') }}" alt="" height="20px" width="20px" style="cursor: pointer;">
       <article class="media">
         <figure class="media-left">
           <p class="image is-64x64">
