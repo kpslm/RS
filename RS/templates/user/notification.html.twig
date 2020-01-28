@@ -1,114 +1,67 @@
 {% extends 'base.html.twig' %}
-{% block link %} <link rel="stylesheet" href="{{ asset('/css/profil.css')}}">{% endblock %}
+{% block link %}
+	<link rel="stylesheet" href="{{ asset('/css/profil.css')}}">
+{% endblock %}
 
 {% block body %}
- 
- <h1><strong>Vos notifications<strong></h1>
 
-    <HR>
-    <br>
-    
-    
-    <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img src="{{ asset('/img/yg.jpg') }}" alt="" width="112px" height="150px" class="is-rounded">
-          </figure>
-        </div>
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <strong>Yamina Gherbi</strong> 
-            a ajouté une nouvelle photo
-            <button >X</button>
-            </p>
-          </div>
-        </div>
-      </article>
-    </div>
-      </div>
-
-      <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img src="{{ asset('/img/user.png') }}" alt="" width="112px" height="150px" class="is-rounded">
-          </figure>
-        </div>
-        <div class="media-content">
-          <div class="content">
-            <p>
-                <strong>Louis Ardilly</strong>
-                souhaite vous ajouter à sa liste d'ami(e)s.
-                <button>X</button>
-            </p>
-          </div>
-        </div>
-      </article>
-    </div>
-      </div>
-
-      <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img src="{{ asset('/img/ygvb.jpg') }}" alt="" width="112px" height="150px" class="is-rounded">
-          </figure>
-        </div>
-        <div class="media-content">
-          <div class="content">
-            <p>
-                <strong>Victoria Beckham</strong>
-                a commenté votre photo.
-                <button >X</button>
-            </p>
-          </div>
-        </div>
-      </article>
-    </div>
-      </div>
-
-      <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img src="{{ asset('/img/user.png') }}" alt="" width="112px" height="150px" class="is-rounded">
-          </figure>
-        </div>
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <strong>Hadil Friaa</strong> 
-            a aimé votre photo.
-            <button >X</button>
-            </p>
-          </div>
-        </div>
-      </article>
-    </div>
-      </div>
-
-      <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img src="{{ asset('/img/yg.jpg') }}" alt="" width="112px" height="150px" class="is-rounded">
-          </figure>
-        </div>
-        <div class="media-content">
-          <div class="content">
-            <p>
-              <strong>Yamina Gherbi</strong> 
-             a aimé votre commentaire
-            <button >X</button>
-            </p>
-          </div>
-        </div>
-      </article>
-    </div>
-      </div>
-      
-     
-
-    
-
-      
+  <h1 style="text-align: center; padding-bottom: 20px"><strong>Vos notifications<strong></h1>
+  <HR>
+			<div class="level">
+				<div class="level-item has-text-centered">
+					<div>
+						<p class="heading"></p>
+						<p class="title">
+							<figure class="image is-64x64">
+								<img src="{{ asset('/img/yg.jpg') }}" alt="" width="112px" height="150px" class="is-rounded">
+							</figure>
+						</p>
+					</div>
+				</div>
+				<div class="level-item has-text-centered">
+					<div>
+						<p class="heading"></p>
+						<p class="title" style:"font-size: 10px;">
+							<strong>Yamina Gherbi</strong>
+							a ajouté une nouvelle photo</p>
+					</div>
+				</div>
+				<div class="level-item has-text-centered">
+					<div>
+						<p class="heading">
+							<button>X</button>
+						</p>
+					</div>
+				</div>
+			</div>
+			<HR>
+      	<div class="level">
+				<div class="level-item has-text-centered">
+					<div>
+						<p class="heading"></p>
+						<p class="title">
+							<figure class="image is-64x64">
+								<img src="{{ asset('/img/yg.jpg') }}" alt="" width="112px" height="150px" class="is-rounded">
+							</figure>
+						</p>
+					</div>
+				</div>
+				<div class="level-item has-text-centered">
+					<div>
+						<p class="heading"></p>
+						<p class="title" style:"font-size: 10px;">
+							<strong>Yamina Gherbi</strong>
+							a ajouté une nouvelle photo</p>
+					</div>
+				</div>
+				<div class="level-item has-text-centered">
+					<div>
+						<p class="heading">
+							<button>X</button>
+						</p>
+					</div>
+				</div>
+			</div>
 
 
-{% endblock %}
+</div></div>{% endblock %}
