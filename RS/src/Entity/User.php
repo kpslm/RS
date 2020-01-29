@@ -31,7 +31,7 @@ class User
     private $username;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date")
      */
     private $age;
 
@@ -86,7 +86,7 @@ class User
     private $isActivate;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
      */
     private $password;
 
@@ -139,7 +139,7 @@ class User
         $this->messages = new ArrayCollection();
         $this->abos = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
-        $this->fgrt = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -172,12 +172,12 @@ class User
         return $this;
     }
 
-    public function getAge(): ?int
+    public function getAge(): ?\DateTimeInterface
     {
         return $this->age;
     }
 
-    public function setAge(int $age): self
+    public function setAge(?\DateTimeInterface $age): self
     {
         $this->age = $age;
 
@@ -304,12 +304,12 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?int
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(int $password): self
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
