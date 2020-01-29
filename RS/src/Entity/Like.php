@@ -19,27 +19,27 @@ class Like
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="likes")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="likes", nullable=true)
      */
     private $idUser;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="likes")
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="likes", nullable=true)
      */
     private $idCom;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Publication", mappedBy="likes")
+     * @ORM\OneToMany(targetEntity="App\Entity\Publication", mappedBy="likes", nullable=true)
      */
     private $idPublication;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="likes")
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="likes", nullable=true)
      */
     private $idPhoto;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Actu", mappedBy="likes")
+     * @ORM\OneToMany(targetEntity="App\Entity\Actu", mappedBy="likes", nullable=true)
      */
     private $idActu;
 

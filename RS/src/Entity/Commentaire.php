@@ -32,17 +32,17 @@ class Commentaire
     private $nbLike;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentaires")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentaires", nullable=true)
      */
     private $idUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Publication", inversedBy="commentaires")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Publication", inversedBy="commentaires", nullable=true)
      */
     private $idPublication;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Picture", inversedBy="commentaires")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Picture", inversedBy="commentaires", nullable=true)
      */
     private $idPicture;
 
