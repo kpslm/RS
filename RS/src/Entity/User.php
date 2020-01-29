@@ -120,6 +120,11 @@ class User
      */
     private $commentaires;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Like", inversedBy="idUser")
+     */
+    private $likes;
+
  
 
     public function __construct()
@@ -466,6 +471,18 @@ class User
                 $commentaire->setIdUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLikes(): ?Like
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?Like $likes): self
+    {
+        $this->likes = $likes;
 
         return $this;
     }

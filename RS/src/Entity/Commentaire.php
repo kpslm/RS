@@ -46,6 +46,16 @@ class Commentaire
      */
     private $idPicture;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Actu", inversedBy="idCommentaire")
+     */
+    private $actu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Like", inversedBy="idCom")
+     */
+    private $likes;
+
 
   
 
@@ -122,6 +132,30 @@ class Commentaire
     public function setIdPicture(?Picture $idPicture): self
     {
         $this->idPicture = $idPicture;
+
+        return $this;
+    }
+
+    public function getActu(): ?Actu
+    {
+        return $this->actu;
+    }
+
+    public function setActu(?Actu $actu): self
+    {
+        $this->actu = $actu;
+
+        return $this;
+    }
+
+    public function getLikes(): ?Like
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?Like $likes): self
+    {
+        $this->likes = $likes;
 
         return $this;
     }

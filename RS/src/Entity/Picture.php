@@ -43,6 +43,11 @@ class Picture
      */
     private $commentaires;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Like", inversedBy="idPhoto")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -128,6 +133,18 @@ class Picture
                 $commentaire->setIdPicture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLikes(): ?Like
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?Like $likes): self
+    {
+        $this->likes = $likes;
 
         return $this;
     }
