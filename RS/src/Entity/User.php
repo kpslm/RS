@@ -110,10 +110,15 @@ class User
      */
     private $messages;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Abo", mappedBy="idUser")
-     */
-    private $abos;
+    // /**
+    //  * @ORM\ManyToMany(targetEntity="App\Entity\Abo", mappedBy="idUser")
+    //  */
+    // private $abos;
+
+    // /**
+    //  * @ORM\ManyToMany(targetEntity="App\Entity\Abo", mappedBy="idUserAbo")
+    //  */
+    // private $abonnée;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="idUser")
@@ -416,33 +421,33 @@ class User
         return $this;
     }
 
-    /**
-     * @return Collection|Abo[]
-     */
-    public function getAbos(): Collection
-    {
-        return $this->abos;
-    }
+    // /**
+    //  * @return Collection|Abo[]
+    //  */
+    // public function getAbos(): Collection
+    // {
+    //     return $this->abos;
+    // }
 
-    public function addAbo(Abo $abo): self
-    {
-        if (!$this->abos->contains($abo)) {
-            $this->abos[] = $abo;
-            $abo->addIdUser($this);
-        }
+    // public function addAbo(Abo $abo): self
+    // {
+    //     if (!$this->abos->contains($abo)) {
+    //         $this->abos[] = $abo;
+    //         $abo->addIdUser($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeAbo(Abo $abo): self
-    {
-        if ($this->abos->contains($abo)) {
-            $this->abos->removeElement($abo);
-            $abo->removeIdUser($this);
-        }
+    // public function removeAbo(Abo $abo): self
+    // {
+    //     if ($this->abos->contains($abo)) {
+    //         $this->abos->removeElement($abo);
+    //         $abo->removeIdUser($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection|Commentaire[]
