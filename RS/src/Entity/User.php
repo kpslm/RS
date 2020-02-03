@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeInterface;
+use Symfony\Component\Validtor\Constraints as Error;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -25,7 +27,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=true)
      */
     private $roles = [];
 
@@ -47,7 +49,7 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date")
      */
     private $age;
 
@@ -57,24 +59,24 @@ class User implements UserInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $adress;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $cdp;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=255)
      */
-    private $picture;
+    private $picture = 'default.jpg';
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $background;
+    private $background = 'default.jpg';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -85,6 +87,8 @@ class User implements UserInterface
      * @ORM\Column(type="date")
      */
     private $atCreated;
+
+    
 
     /**
      * @ORM\Column(type="boolean")
@@ -246,12 +250,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAge(): ?int
+    public function getAge(): ?\DateTimeInterface
     {
         return $this->age;
     }
 
-    public function setAge(int $age): self
+    public function setAge(\DateTimeInterface $age): self
     {
         $this->age = $age;
 

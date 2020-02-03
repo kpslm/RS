@@ -5,6 +5,8 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,7 +45,27 @@ class UserType extends AbstractType
                 'placeholder' => 'Email'
                 ]
             ])
-            ->add('password')
+            ->add('password', RepeatedType::class,[
+                'type' =>PasswordType::class,
+                'invalid_message' => 'vos mots de passes ne sont pas identiques !',
+                'first_options' =>[
+                    'label' => 'mot de passe ',
+                    'attr' => [
+                        "placeholder" =>"mot de passe"
+
+                    ]
+                    ],
+                'second_options' =>[
+                    'label' => 'repeter mot de passe ',
+                    'attr' => [
+                    
+                        "placeholder" =>"repeter le mot de passe"
+                        
+                    ]
+                ]
+            ]) 
+
+            
             
             ->add('submit', SubmitType::class)       
         ;

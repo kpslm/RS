@@ -106,6 +106,13 @@
 				</div>
 			</div>
 		</nav>
+		{% for message in app.flashes('succes') %}
+  <div class="alert alert-success">{{ message }}</div>
+{% endfor %}
+
+{% for message in app.flashes('errors') %}
+  <div class="alert alert-danger">{{ message }}</div>
+{% endfor %}
 		{% block body %}{% endblock %}
 		{% block javascripts %}{% endblock %}
 	</body>
