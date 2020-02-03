@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -18,20 +19,35 @@ class User
      */
     private $id;
 
-    
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=60, nullable=true)
+     */
+    private $ville;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstname;
+    private $nom;
+
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="integer")
      */
     private $age;
 
@@ -43,25 +59,15 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $adress;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", length=5)
-     */
     private $cdp;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=5)
      */
     private $picture;
 
@@ -85,61 +91,50 @@ class User
      */
     private $isActivate;
 
+
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="user")
      */
-    private $password;
+    private $photos;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $compteEntreprise;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Publication", mappedBy="idUser")
-     */
-    private $publications;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="idUser")
-     */
-    private $pictures;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="idUser")
-     */
-    private $messages;
-
-    // /**
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Abo", mappedBy="idUser")
-    //  */
-    // private $abos;
-
-    // /**
-    //  * @ORM\ManyToMany(targetEntity="App\Entity\Abo", mappedBy="idUserAbo")
-    //  */
-    // private $abonnée;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="idUser")
-     */
-    private $commentaires;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Like", inversedBy="idUser")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="user")
      */
     private $likes;
 
- 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="user")
+     */
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="user")
+     */
+    private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Publication", mappedBy="user")
+     */
+    private $Publication;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Publication", mappedBy="user")
+     */
+    private $publications;
 
     public function __construct()
     {
         $this->publications = new ArrayCollection();
-        $this->pictures = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->messages = new ArrayCollection();
-        $this->abos = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
-       
+        $this->Publication = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,22 +142,101 @@ class User
         return $this->id;
     }
 
-
-    public function getFirstname(): ?string
+    public function getEmail(): ?string
     {
-        return $this->firstname;
+        return $this->email;
     }
 
-    public function setFirstname(string $firstname): self
+    public function setEmail(string $email): self
     {
-        $this->firstname = $firstname;
+        $this->email = $email;
 
         return $this;
     }
 
-    public function getUsername(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
-        return $this->username;
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): string
+    {
+        return (string) $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt()
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 
     public function setUsername(string $username): self
@@ -172,12 +246,12 @@ class User
         return $this;
     }
 
-    public function getAge(): ?\DateTimeInterface
+    public function getAge(): ?int
     {
         return $this->age;
     }
 
-    public function setAge(?\DateTimeInterface $age): self
+    public function setAge(int $age): self
     {
         $this->age = $age;
 
@@ -196,17 +270,7 @@ class User
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
 
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 
     public function getAdress(): ?string
     {
@@ -216,18 +280,6 @@ class User
     public function setAdress(string $adress): self
     {
         $this->adress = $adress;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): self
-    {
-        $this->city = $city;
 
         return $this;
     }
@@ -304,55 +356,32 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getCompteEntreprise(): ?bool
-    {
-        return $this->compteEntreprise;
-    }
-
-    public function setCompteEntreprise(bool $compteEntreprise): self
-    {
-        $this->compteEntreprise = $compteEntreprise;
-
-        return $this;
-    }
-
+    
     /**
-     * @return Collection|Publication[]
+     * @return Collection|Picture[]
      */
-    public function getPublications(): Collection
+    public function getPhotos(): Collection
     {
-        return $this->publications;
+        return $this->photos;
     }
 
-    public function addPublication(Publication $publication): self
+    public function addPhoto(Picture $photo): self
     {
-        if (!$this->publications->contains($publication)) {
-            $this->publications[] = $publication;
-            $publication->setIdUser($this);
+        if (!$this->photos->contains($photo)) {
+            $this->photos[] = $photo;
+            $photo->setUser($this);
         }
 
         return $this;
     }
 
-    public function removePublication(Publication $publication): self
+    public function removePhoto(Picture $photo): self
     {
-        if ($this->publications->contains($publication)) {
-            $this->publications->removeElement($publication);
+        if ($this->photos->contains($photo)) {
+            $this->photos->removeElement($photo);
             // set the owning side to null (unless already changed)
-            if ($publication->getIdUser() === $this) {
-                $publication->setIdUser(null);
+            if ($photo->getUser() === $this) {
+                $photo->setUser(null);
             }
         }
 
@@ -360,30 +389,61 @@ class User
     }
 
     /**
-     * @return Collection|Picture[]
+     * @return Collection|Like[]
      */
-    public function getPictures(): Collection
+    public function getLikes(): Collection
     {
-        return $this->pictures;
+        return $this->likes;
     }
 
-    public function addPicture(Picture $picture): self
+    public function addLike(Like $like): self
     {
-        if (!$this->pictures->contains($picture)) {
-            $this->pictures[] = $picture;
-            $picture->setIdUser($this);
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setUser($this);
         }
 
         return $this;
     }
 
-    public function removePicture(Picture $picture): self
+    public function removeLike(Like $like): self
     {
-        if ($this->pictures->contains($picture)) {
-            $this->pictures->removeElement($picture);
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
             // set the owning side to null (unless already changed)
-            if ($picture->getIdUser() === $this) {
-                $picture->setIdUser(null);
+            if ($like->getUser() === $this) {
+                $like->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Commentaire $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Commentaire $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
@@ -402,7 +462,7 @@ class User
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-            $message->setIdUser($this);
+            $message->setUser($this);
         }
 
         return $this;
@@ -413,84 +473,62 @@ class User
         if ($this->messages->contains($message)) {
             $this->messages->removeElement($message);
             // set the owning side to null (unless already changed)
-            if ($message->getIdUser() === $this) {
-                $message->setIdUser(null);
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
             }
         }
 
         return $this;
     }
-
-    // /**
-    //  * @return Collection|Abo[]
-    //  */
-    // public function getAbos(): Collection
-    // {
-    //     return $this->abos;
-    // }
-
-    // public function addAbo(Abo $abo): self
-    // {
-    //     if (!$this->abos->contains($abo)) {
-    //         $this->abos[] = $abo;
-    //         $abo->addIdUser($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeAbo(Abo $abo): self
-    // {
-    //     if ($this->abos->contains($abo)) {
-    //         $this->abos->removeElement($abo);
-    //         $abo->removeIdUser($this);
-    //     }
-
-    //     return $this;
-    // }
 
     /**
-     * @return Collection|Commentaire[]
+     * @return Collection|Publication[]
      */
-    public function getCommentaires(): Collection
+    public function getPublication(): Collection
     {
-        return $this->commentaires;
+        return $this->Publication;
     }
 
-    public function addCommentaire(Commentaire $commentaire): self
+    public function addPublication(Publication $publication): self
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setIdUser($this);
+        if (!$this->Publication->contains($publication)) {
+            $this->Publication[] = $publication;
+            $publication->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaire $commentaire): self
+    public function removePublication(Publication $publication): self
     {
-        if ($this->commentaires->contains($commentaire)) {
-            $this->commentaires->removeElement($commentaire);
+        if ($this->Publication->contains($publication)) {
+            $this->Publication->removeElement($publication);
             // set the owning side to null (unless already changed)
-            if ($commentaire->getIdUser() === $this) {
-                $commentaire->setIdUser(null);
+            if ($publication->getUser() === $this) {
+                $publication->setUser(null);
             }
         }
 
         return $this;
     }
 
-    public function getLikes(): ?Like
+    public function getPrenom(): ?string
     {
-        return $this->likes;
+        return $this->prenom;
     }
 
-    public function setLikes(?Like $likes): self
+    public function setPrenom(string $prenom): self
     {
-        $this->likes = $likes;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    
+    /**
+     * @return Collection|Publication[]
+     */
+    public function getPublications(): Collection
+    {
+        return $this->publications;
+    }
 }

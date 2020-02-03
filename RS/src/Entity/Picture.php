@@ -33,24 +33,31 @@ class Picture
      */
     private $nbLike;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="pictures")
-     */
-    private $idUser;
+   
+
+ 
+
+  
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="idPicture")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="photos")
      */
-    private $commentaires;
+    private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Like", inversedBy="idPhoto")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="picture")
      */
     private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="picture")
+     */
+    private $commentaires;
 
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -94,14 +101,49 @@ class Picture
         return $this;
     }
 
-    public function getIdUser(): ?User
+
+
+  
+
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->user;
     }
 
-    public function setIdUser(?User $idUser): self
+    public function setUser(?User $user): self
     {
-        $this->idUser = $idUser;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setPicture($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getPicture() === $this) {
+                $like->setPicture(null);
+            }
+        }
 
         return $this;
     }
@@ -118,7 +160,7 @@ class Picture
     {
         if (!$this->commentaires->contains($commentaire)) {
             $this->commentaires[] = $commentaire;
-            $commentaire->setIdPicture($this);
+            $commentaire->setPicture($this);
         }
 
         return $this;
@@ -129,22 +171,10 @@ class Picture
         if ($this->commentaires->contains($commentaire)) {
             $this->commentaires->removeElement($commentaire);
             // set the owning side to null (unless already changed)
-            if ($commentaire->getIdPicture() === $this) {
-                $commentaire->setIdPicture(null);
+            if ($commentaire->getPicture() === $this) {
+                $commentaire->setPicture(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getLikes(): ?Like
-    {
-        return $this->likes;
-    }
-
-    public function setLikes(?Like $likes): self
-    {
-        $this->likes = $likes;
 
         return $this;
     }

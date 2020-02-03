@@ -26,10 +26,7 @@ class Message
      */
     private $date;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
-     */
-    private $idUser;
+  
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
@@ -50,6 +47,11 @@ class Message
      * @ORM\Column(type="boolean")
      */
     private $lu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="messages")
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -80,17 +82,6 @@ class Message
         return $this;
     }
 
-    public function getIdUser(): ?User
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(?User $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
 
     public function getIdUserReception(): ?User
     {
@@ -136,6 +127,18 @@ class Message
     public function setLu(bool $lu): self
     {
         $this->lu = $lu;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

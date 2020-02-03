@@ -5,6 +5,7 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,14 +16,14 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname', TextType::class,[
+            ->add('prenom', TextType::class,[
                 'attr' =>[ 
                     'placeholder' => "Firstname",
                 
                 ]
             ])
 
-            ->add('username' , TextType::class,[
+            ->add('nom' , TextType::class,[
                 'attr' =>[ 
                     'placeholder' => "username",
                 
@@ -32,7 +33,7 @@ class UserType extends AbstractType
                 'widget' => 'choice',
                 'label' =>'Date'
             ])
-
+ 
             ->add('phone', TelType::class,[
                 'label' =>'Phone'
                 ])
@@ -44,6 +45,7 @@ class UserType extends AbstractType
             ])
             ->add('password')
             
+            ->add('submit', SubmitType::class)       
         ;
     }
 

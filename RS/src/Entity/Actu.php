@@ -49,13 +49,16 @@ class Actu
     private $idCommentaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Like", inversedBy="idActu")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="Actu")
      */
     private $likes;
+
+    
 
     public function __construct()
     {
         $this->idCommentaire = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,15 +157,35 @@ class Actu
         return $this;
     }
 
-    public function getLikes(): ?Like
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
     {
         return $this->likes;
     }
 
-    public function setLikes(?Like $likes): self
+    public function addLike(Like $like): self
     {
-        $this->likes = $likes;
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setActu($this);
+        }
 
         return $this;
     }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getActu() === $this) {
+                $like->setActu(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

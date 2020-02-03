@@ -18,34 +18,35 @@ class Like
      */
     private $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="likes")
-     */
-    private $idUser;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="likes")
      */
-    private $idCom;
+    private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Publication", mappedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Actu", inversedBy="likes")
      */
-    private $idPublication;
+    private $Actu;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Commentaire", inversedBy="likes")
      */
-    private $idPhoto;
+    private $commentaire;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Actu", mappedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Publication", inversedBy="likes")
      */
-    private $idActu;
+    private $publication;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Picture", inversedBy="likes")
+     */
+    private $picture;
 
     public function __construct()
     {
-        $this->idUser = new ArrayCollection();
+       
         $this->idCom = new ArrayCollection();
         $this->idPublication = new ArrayCollection();
         $this->idPhoto = new ArrayCollection();
@@ -57,157 +58,63 @@ class Like
         return $this->id;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getIdUser(): Collection
+
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->user;
     }
 
-    public function addIdUser(User $idUser): self
+    public function setUser(?User $user): self
     {
-        if (!$this->idUser->contains($idUser)) {
-            $this->idUser[] = $idUser;
-            $idUser->setLikes($this);
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeIdUser(User $idUser): self
+    public function getActu(): ?Actu
     {
-        if ($this->idUser->contains($idUser)) {
-            $this->idUser->removeElement($idUser);
-            // set the owning side to null (unless already changed)
-            if ($idUser->getLikes() === $this) {
-                $idUser->setLikes(null);
-            }
-        }
+        return $this->Actu;
+    }
+
+    public function setActu(?Actu $Actu): self
+    {
+        $this->Actu = $Actu;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Commentaire[]
-     */
-    public function getIdCom(): Collection
+    public function getCommentaire(): ?Commentaire
     {
-        return $this->idCom;
+        return $this->commentaire;
     }
 
-    public function addIdCom(Commentaire $idCom): self
+    public function setCommentaire(?Commentaire $commentaire): self
     {
-        if (!$this->idCom->contains($idCom)) {
-            $this->idCom[] = $idCom;
-            $idCom->setLikes($this);
-        }
+        $this->commentaire = $commentaire;
 
         return $this;
     }
 
-    public function removeIdCom(Commentaire $idCom): self
+    public function getPublication(): ?Publication
     {
-        if ($this->idCom->contains($idCom)) {
-            $this->idCom->removeElement($idCom);
-            // set the owning side to null (unless already changed)
-            if ($idCom->getLikes() === $this) {
-                $idCom->setLikes(null);
-            }
-        }
+        return $this->publication;
+    }
+
+    public function setPublication(?Publication $publication): self
+    {
+        $this->publication = $publication;
 
         return $this;
     }
 
-    /**
-     * @return Collection|Publication[]
-     */
-    public function getIdPublication(): Collection
+    public function getPicture(): ?Picture
     {
-        return $this->idPublication;
+        return $this->picture;
     }
 
-    public function addIdPublication(Publication $idPublication): self
+    public function setPicture(?Picture $picture): self
     {
-        if (!$this->idPublication->contains($idPublication)) {
-            $this->idPublication[] = $idPublication;
-            $idPublication->setLikes($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdPublication(Publication $idPublication): self
-    {
-        if ($this->idPublication->contains($idPublication)) {
-            $this->idPublication->removeElement($idPublication);
-            // set the owning side to null (unless already changed)
-            if ($idPublication->getLikes() === $this) {
-                $idPublication->setLikes(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Picture[]
-     */
-    public function getIdPhoto(): Collection
-    {
-        return $this->idPhoto;
-    }
-
-    public function addIdPhoto(Picture $idPhoto): self
-    {
-        if (!$this->idPhoto->contains($idPhoto)) {
-            $this->idPhoto[] = $idPhoto;
-            $idPhoto->setLikes($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdPhoto(Picture $idPhoto): self
-    {
-        if ($this->idPhoto->contains($idPhoto)) {
-            $this->idPhoto->removeElement($idPhoto);
-            // set the owning side to null (unless already changed)
-            if ($idPhoto->getLikes() === $this) {
-                $idPhoto->setLikes(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Actu[]
-     */
-    public function getIdActu(): Collection
-    {
-        return $this->idActu;
-    }
-
-    public function addIdActu(Actu $idActu): self
-    {
-        if (!$this->idActu->contains($idActu)) {
-            $this->idActu[] = $idActu;
-            $idActu->setLikes($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdActu(Actu $idActu): self
-    {
-        if ($this->idActu->contains($idActu)) {
-            $this->idActu->removeElement($idActu);
-            // set the owning side to null (unless already changed)
-            if ($idActu->getLikes() === $this) {
-                $idActu->setLikes(null);
-            }
-        }
+        $this->picture = $picture;
 
         return $this;
     }

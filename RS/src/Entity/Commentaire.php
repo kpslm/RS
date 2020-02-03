@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,30 +33,40 @@ class Commentaire
      */
     private $nbLike;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentaires")
-     */
-    private $idUser;
+   
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Publication", inversedBy="commentaires")
      */
     private $idPublication;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Picture", inversedBy="commentaires")
-     */
-    private $idPicture;
+  
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Actu", inversedBy="idCommentaire")
      */
     private $actu;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Like", inversedBy="idCom")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="commentaire")
      */
     private $likes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Picture", inversedBy="commentaires")
+     */
+    private $picture;
+
+    public function __construct()
+    {
+        $this->likes = new ArrayCollection();
+    }
 
 
   
@@ -100,17 +112,7 @@ class Commentaire
         return $this;
     }
 
-    public function getIdUser(): ?User
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(?User $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
+   
 
     public function getIdPublication(): ?Publication
     {
@@ -124,17 +126,6 @@ class Commentaire
         return $this;
     }
 
-    public function getIdPicture(): ?Picture
-    {
-        return $this->idPicture;
-    }
-
-    public function setIdPicture(?Picture $idPicture): self
-    {
-        $this->idPicture = $idPicture;
-
-        return $this;
-    }
 
     public function getActu(): ?Actu
     {
@@ -148,14 +139,59 @@ class Commentaire
         return $this;
     }
 
-    public function getLikes(): ?Like
+  
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
     {
         return $this->likes;
     }
 
-    public function setLikes(?Like $likes): self
+    public function addLike(Like $like): self
     {
-        $this->likes = $likes;
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setCommentaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            // set the owning side to null (unless already changed)
+            if ($like->getCommentaire() === $this) {
+                $like->setCommentaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPicture(): ?Picture
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?Picture $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }
