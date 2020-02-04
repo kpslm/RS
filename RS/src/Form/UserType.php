@@ -16,33 +16,34 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    { 
         $builder
             ->add('prenom', TextType::class,[
                 'attr' =>[ 
                     'placeholder' => "Firstname",
-                
+                    'class' => 'input is-warning'
                 ]
             ])
 
             ->add('nom' , TextType::class,[
                 'attr' =>[ 
                     'placeholder' => "username",
-                
+                    'class' => 'input is-warning'
                 ]
             ])
             ->add('age' , BirthdayType::class, [
                 'widget' => 'choice',
-                'label' =>'Date'
+                'label' =>'Date',
             ])
  
             ->add('phone', TelType::class,[
-                'label' =>'Phone'
+                'label' =>'Phone',
                 ])
                 
             ->add('email', EmailType::class,[
                 'attr'  =>[
-                'placeholder' => 'Email'
+                'placeholder' => 'Email',
+                'class' => 'input is-warning'
                 ]
             ])
             ->add('password', RepeatedType::class,[
@@ -51,7 +52,8 @@ class UserType extends AbstractType
                 'first_options' =>[
                     'label' => 'mot de passe ',
                     'attr' => [
-                        "placeholder" =>"mot de passe"
+                        "placeholder" =>"mot de passe",
+                        'class' => 'input is-warning'
 
                     ]
                     ],
@@ -59,15 +61,18 @@ class UserType extends AbstractType
                     'label' => 'repeter mot de passe ',
                     'attr' => [
                     
-                        "placeholder" =>"repeter le mot de passe"
+                        "placeholder" =>"repeter le mot de passe",
+                        'class' => 'input is-warning'
                         
                     ]
                 ]
             ]) 
-
-            
-            
-            ->add('submit', SubmitType::class)       
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'button is-warning'
+                    
+                ]
+            ])       
         ;
     }
 

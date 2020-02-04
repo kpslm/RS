@@ -2,7 +2,80 @@
 {% block title %} Register {% endblock %}
 
 {% block body %}
-{{form_start(RegisterForm)}}
-{{form_widget(RegisterForm)}}
-{{form_end(RegisterForm)}}
- {% endblock %}
+
+
+
+
+<div style="height: 92vh;">
+
+    <h1 class="title is-2" style="text-align: center; margin: 2% 0 4% 0;">Inscription</h1>
+    <div class="box column is-narrow"
+        style="background-color: white; border: 1px solid rgb(226, 226, 226); height: 70%; width: 30%; margin: 0 auto;">
+        <br>
+        {{form_start(RegisterForm)}}
+        <div class="field" style="margin-bottom: 15px;">
+            <div class="control has-icons-left has-icons-right">
+                {{form_widget(RegisterForm.prenom)}}
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control has-icons-left has-icons-right">
+                {{form_widget(RegisterForm.nom)}}
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control has-icons-left has-icons-right">
+                {{form_widget(RegisterForm.age)}}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control has-icons-left has-icons-right">
+                {{form_widget(RegisterForm.phone)}}
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control has-icons-left has-icons-right">
+                {{form_widget(RegisterForm.email)}}
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+            </div>
+        </div>
+
+
+        <div class="field">
+            <div class="control">
+                {{form_widget(RegisterForm.password)}}
+                
+            </div>
+        </div>
+
+
+
+        <div class="field is-grouped" style="margin: 10% 0 0 5%;">
+            <p class="control" style="margin: 0 40% 0 0;">
+                {{form_widget(RegisterForm.submit)}}
+            </p>
+        </div>
+        {{form_end(RegisterForm)}}
+    </div>
+    {% endblock %}
