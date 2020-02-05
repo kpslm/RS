@@ -7,6 +7,8 @@ use App\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 
 class UserController extends AbstractController
@@ -28,12 +30,15 @@ class UserController extends AbstractController
 
             $manager = $this ->getDoctrine() ->getManager();
             $manager -> persist($user);
+           
+            
 
             $manager ->flush();
 
             $this ->addFlash('success',$user -> getPrenom().'bienvenue parmis nous');
             //afficher la vue 
             return $this -> redirectToRoute('login');
+
 
         }
 
@@ -43,9 +48,13 @@ class UserController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function login()
+    public function login(AuthenticationUtils $authenticationUtils)
     {
-        return $this->render('user/login.html.twig', []);
+        $error = $authenticationUtils->getLastAuthenticationError();
+        return $this->render('user/register.html.twig', [
+            'error' => $error
+        ]);
+        
     }
 
       /**
