@@ -85,15 +85,24 @@
 						</figure>
 					</a>
 					<div class="navbar-dropdown is-boxed">
-						<a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
-							Overview
+					
+					 {% if app.user != null  %}
+					
+					<a class="navbar-item" href="{{path('logout')}}">
+							Deconnexion
 						</a>
-						<a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
-							Modifiers
+						{% endif %} 
+						
+					{% if app.user == null  %}
+						<a class="navbar-item"  href="{{path('login')}}">
+							Connexion
 						</a>
-						<a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-							Columns
+						<a class="navbar-item" href="{{path('register')}}">
+							Inscription
 						</a>
+						{% endif %} 
+						
+						
 						<a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
 							Layout
 						</a>
@@ -112,6 +121,7 @@
 			</div>
 		</div>
 	</nav>
+
 	{% for message in app.flashes('success') %}
 	<article class="message is-success">
 		<div class="message-header">

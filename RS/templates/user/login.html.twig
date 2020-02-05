@@ -5,7 +5,6 @@
         <div>{{ error.messageKey | trans(error.messageData, 'security') }}</div>
         {% endif %}
         <div>
-
             <div style="height: 92vh;">
 
                 <h1 class="title is-2" style="text-align: center; margin: 2% 0 4% 0;">Connexion</h1>
@@ -14,7 +13,7 @@
                     <br>
                     <div class="field" style="margin-bottom: 15px;">
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input is-warning" type="text" placeholder="Email" required name="maail">
+                            <input class="input is-warning" type="text" placeholder="Email" required name="_username">
                             <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
                 </span>
@@ -26,7 +25,7 @@
 
                     <div class="field">
                         <div class="control has-icons-left has-icons-right">
-                            <input class="input is-warning" type="password" placeholder="Mot de passe" required name="psw">
+                            <input class="input is-warning" type="password" placeholder="Mot de passe" required name="_password">
                             <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                 </span>
@@ -40,14 +39,14 @@
 
                     <div class="field is-grouped" style="margin: 10% 0 0 5%;">
                         <p class="control" style="margin: 0 40% 0 0;">
-                            <a class="button is-primary">
+                            <a class="button is-primary" href="{{ path ('register')}}">
                     Inscription
                 </a>
                         </p>
                         <p class="control">
-                            <a class="button is-warning">
+                            <button class="button is-warning">
                     Connexion
-                </a>
+                </button>
                         </p>
                     </div>
 
