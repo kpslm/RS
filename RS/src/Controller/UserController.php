@@ -35,7 +35,7 @@ class UserController extends AbstractController
 
             $manager ->flush();
 
-            $this ->addFlash('success',$user -> getPrenom().'bienvenue parmis nous');
+            $this ->addFlash('success',' Bienvenue parmis nous ' .$user -> getPrenom() . ' tu es desormais inscris');
             //afficher la vue 
             return $this -> redirectToRoute('login');
 
