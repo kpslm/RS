@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use DateTimeInterface;
-use Symfony\Component\Validtor\Constraints as Error;
+use Symfony\Component\Validator\Constraints as Error;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * * @UniqueEntity(fields="mail", message="cette adresse mail existe déja")
+ * @UniqueEntity(fields="email", message="cette adresse mail existe déja")
  */
 class User implements UserInterface
 {
@@ -26,8 +26,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Error\Email(
-     *     message = "l'email '{{ value }}' n'est pas valide.")
+     * Error\Email(
+     *     message = "Ton Email '{{ value }}' n'est pas valide.")
      */
     private $email;
 
@@ -39,9 +39,10 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\Length(
+     * @Error\Length(
      *      min = 8,
-     *      minMessage = "Your first name must be at least {{ value }} characters long"
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+
      * )
      */
     private $password;
