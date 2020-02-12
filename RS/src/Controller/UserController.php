@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Publication;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 
@@ -77,7 +78,12 @@ class UserController extends AbstractController
      */
     public function profil()
     {
-        return $this->render('user/profil.html.twig', []);
+        $user = $this->getUser();
+        $repository = $this ->getDoctrine() -> getRepository(Publication::class);
+        $publi = $repository -> findAllPublication($user);
+        return $this->render('user/profil.html.twig', ['publi' => $publi]);
+
+
     }
 
     /**
