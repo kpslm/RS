@@ -10,6 +10,8 @@
 
 
 
+
+
 <div class="columns">
     <div class="column">
         A propos de vous:
@@ -18,7 +20,9 @@
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Publication</p>
-                    <p class="title">3</p>
+
+                    <p class="title"> {{publi|length}}
+                    </p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
@@ -47,7 +51,7 @@
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">Nombre de j'aime:</p>
-                    <p class="title">3</p>
+                    <p class="title"></p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
@@ -96,7 +100,7 @@
                             {{form_end(PublicationForm)}}
                         </nav>
 
-                        {% for value in publi %}
+                        {% for key, value in publi %}
                         <div class="box">
                             <article class="media">
                                 <div class="media-left">
@@ -107,7 +111,27 @@
                                 <div class="media-content">
                                     <div class="content">
                                         <p>
-                                            <strong>{{value.user.prenom}} {{value.user.nom}}</strong><small> {{value.date.date}}</small>
+                                            <strong>{{value.user.prenom}} {{value.user.nom}}</strong><small style="font-size: 10px;">  il y a
+                                                {% if time[key].y == 1 %}
+                                                 {{time[key].y}} an 
+
+                                                 {% elseif  time[key].y > 1 %}
+                                                 {{time[key].y}} ans
+                                                 {% elseif time[key].days > 31 and time[key].m < 12 %} 
+                                                 {{time[key].m}} mois
+                                                 {% elseif time[key].days < 31 and  time[key].days > 1 %}
+                                                 {{time[key].d}} jours
+                                                 {% elseif  time[key].h < 24 and  time[key].h > 0  %}
+                                                 {{time[key].h}} heures
+                                                 {% elseif  time[key].i < 60 and  time[key].i > 0  %}
+                                                 {{time[key].i}} minutes
+                                                 {% else %}
+                                                 {{time[key].s}} secondes
+                                                 
+                                                 {% endif %} 
+
+                                                
+                                                </small>
                                             <br> {{value.text}}
                                         </p>
                                     </div>

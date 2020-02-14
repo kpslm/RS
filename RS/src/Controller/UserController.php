@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Actu;
+use App\Entity\Commentaire;
+use App\Entity\Like;
+use App\Entity\Picture;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\Publication;
@@ -23,7 +27,7 @@ class UserController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $this->getUser();
-        if ( $user!= null) {
+        if ($user != null) {
             return $this->redirectToRoute('profil');
         }
         $user = new User;
@@ -35,7 +39,7 @@ class UserController extends AbstractController
             $user->setIsActivate(true);
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
-            
+
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($user);
 
@@ -81,33 +85,59 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        $repository = $this ->getDoctrine() -> getRepository(Publication::class);
-        $publi = $repository -> findAllPublication($user);
-        $publication= new Publication;
-        $formpub= $this->createForm(PublicationType::class, $publication);
+        $repository = $this->getDoctrine()->getRepository(Publication::class);
+        $publi = $repository->findAllPublication($user);
+        $time = [];
+        foreach ($publi as $key => $value) {
+            $u = $value->getDate();
+            $stringValue = $u->format('Y-m-d H:i:s');
+            $datetime1 = new \DateTime(); // date actuelle
+            $datetime2 = new \DateTime($stringValue);
+            $date = $datetime1->diff($datetime2, true); // le y = nombre d'années ex : 22
+            $time[] = $date;
+        }
+
+        $publication = new Publication;
+        $formpub = $this->createForm(PublicationType::class, $publication);
         $formpub->handleRequest($request);
 
         if ($formpub->isSubmitted() && $formpub->isValid()) {
-             $publication->setDate(new \DateTime('now'));
-             $publication->setUser($user);
-             $manager = $this->getDoctrine()->getManager();
-             $manager->persist($publication);
- 
- 
- 
-             $manager->flush();
-             return $this->redirectToRoute('profil');
-        }
- 
+            $publication->setDate(new \DateTime('now'));
+            $publication->setUser($user);
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($publication);
 
+
+
+            $manager->flush();
+            return $this->redirectToRoute('profil');
+        }
+
+       
+        // $re = $this->getDoctrine()->getRepository(Actu::class);
+        // $actu = $re->findAll();
+
+        // $rep = $this->getDoctrine()->getRepository(Commentaire::class);
+        // $com = $rep->findAll();
+
+        // $repos = $this->getDoctrine()->getRepository(Picture::class);
+        // $picture = $repos->findAll();
+
+        // $repo = $this->getDoctrine()->getRepository(Like::class);
+        // $like = $repo->findAll();
 
 
         return $this->render('user/profil.html.twig', [
             'publi' => $publi,
-            'PublicationForm' => $formpub->createView()
+            'PublicationForm' => $formpub->createView(),
+            'time' => $time,
+            // 'like'=>  $like,
+            // 'pic' => $picture,
+            // 'com' => $com,
+            // 'actu' => $actu,
+            // 'pub' => $publica
 
-            
-            ]);
+        ]);
     }
 
     /**
@@ -115,7 +145,12 @@ class UserController extends AbstractController
      */
     public function galery()
     {
-        return $this->render('user/galery.html.twig', []);
+        $user = $this->getUser();
+        $repo = $this->getDoctrine()->getRepository(Picture::class);
+        $pic= $repo->findAllPicture($user);
+        
+
+        return $this->render('user/galery.html.twig', [ 'pic' => $pic,]);
     }
 
     /**
