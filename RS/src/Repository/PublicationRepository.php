@@ -28,7 +28,7 @@ class PublicationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->andWhere('p.user = :val')
             ->setParameter('val', $value)
-            ->orderBy('p.date', 'ASC')
+            ->orderBy('p.date', 'DESC')
             ->getQuery()
             ->getResult()
         ;

@@ -1,5 +1,5 @@
-{% extends 'base.html.twig' %} {% block title %} Profil {% endblock %} {% block link %}
-<link rel="stylesheet" href="{{ asset('/css/profil.css')}}">{% endblock %} {% block body %} {{dump(publi)}}
+{% extends 'base.html.twig' %} {% block title %} Profil {% endblock %} {% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('/css/profil.css')}}">{% endblock %} {% block body %}
 <div>
     <img style="max-height: 200px; min-width: 100%" src="{{ asset('/img/voyage.webp') }}">
     <figure class="image is-96x96" style="position: absolute; left: 49%; top: 19%; ">
@@ -70,28 +70,30 @@
             <article class="media">
                 <div class="media-left">
                     <figure class="image is-64x64">
-                        <img src="{{ asset('/img/yg.jpg') }}" alt="" width="112px" height="150px" class="is-rounded">
+                        <img src="{{ asset('/imageUser/' ~ app.user.picture) }}" alt="" width="112px" height="150px" class="is-rounded">
                     </figure>
                 </div>
-                <div class="media-content">
+                <div class="media-content" style="max-height: 550px; overflow: scroll">
                     <div class="content">
                         <p>
-                            <strong>Yamina Gherbi</strong>
+                            <strong>{{app.user.prenom}} {{app.user.nom}}</strong>
                             <br>
                         </p>
                     </div>
                     <div class="media-content">
                         <div class="field">
                             <p class="control">
-                                <textarea style="min-height: 3em" class="textarea" placeholder="Exprimez-vous..."></textarea>
+                                {{form_start(PublicationForm)}} {{form_widget(PublicationForm.text)}}
+
                             </p>
                         </div>
                         <nav class="level">
                             <div class="level-left">
                                 <div class="level-item">
-                                    <a class="button is-warning">Submit</a>
+                                    {{form_widget(PublicationForm.submit)}}
                                 </div>
                             </div>
+                            {{form_end(PublicationForm)}}
                         </nav>
 
                         {% for value in publi %}
@@ -99,7 +101,7 @@
                             <article class="media">
                                 <div class="media-left">
                                     <figure class="image is-64x64">
-                                        <img src="{{ asset('/img/' ~ app.user.picture) }}" alt="" width="112px" height="150px" class="is-rounded">
+                                        <img src="{{ asset('/imageUser/' ~ app.user.picture) }}" alt="" width="112px" height="150px" class="is-rounded">
                                     </figure>
                                 </div>
                                 <div class="media-content">

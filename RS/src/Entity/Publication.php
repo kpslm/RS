@@ -28,12 +28,6 @@ class Publication
      */
     private $date;
 
-  
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $nbLike;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Commentaire", mappedBy="idPublication")
@@ -84,19 +78,6 @@ class Publication
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-
-    public function getNbLike(): ?int
-    {
-        return $this->nbLike;
-    }
-
-    public function setNbLike(int $nbLike): self
-    {
-        $this->nbLike = $nbLike;
 
         return $this;
     }

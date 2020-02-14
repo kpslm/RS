@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\Publication;
+use App\Form\PublicationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,14 +77,37 @@ class UserController extends AbstractController
     /**
      * @Route("/profil", name="profil")
      */
-    public function profil()
+    public function profil(Request $request)
     {
         $user = $this->getUser();
+
         $repository = $this ->getDoctrine() -> getRepository(Publication::class);
         $publi = $repository -> findAllPublication($user);
-        return $this->render('user/profil.html.twig', ['publi' => $publi]);
+        $publication= new Publication;
+        $formpub= $this->createForm(PublicationType::class, $publication);
+        $formpub->handleRequest($request);
+
+        if ($formpub->isSubmitted() && $formpub->isValid()) {
+             $publication->setDate(new \DateTime('now'));
+             $publication->setUser($user);
+             $manager = $this->getDoctrine()->getManager();
+             $manager->persist($publication);
+ 
+ 
+ 
+             $manager->flush();
+             return $this->redirectToRoute('profil');
+        }
+ 
 
 
+
+        return $this->render('user/profil.html.twig', [
+            'publi' => $publi,
+            'PublicationForm' => $formpub->createView()
+
+            
+            ]);
     }
 
     /**
